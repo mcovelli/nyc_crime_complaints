@@ -1,5 +1,7 @@
 # nyc_crime_complaints_historic
-Analysis of NYC Crime trends, Borough comparisons and offense types
+Analysis of NYC Crime trends, Borough comparisons and offense types  
+  
+This is an analysis of 
 
 ### Work in progress...  
 
@@ -41,22 +43,24 @@ Analysis of NYC Crime trends, Borough comparisons and offense types
 
    | # | Column  | Type  | Description |
    | --- | ---------  | ------- | -------- |
-   | 1 | CMPLNT_FR_DT | text | Exact date of occurence (if CMPLNT_TO_DT exists) |
-   | 2 | CMPLNT_FR_TM | text | exact time of occurence (if CMPLNT_TO_TM exists) |
-   | 3 | RPT_DT | text | Date the incident was reported to the police |
-   | 4 | OFNS_DESC |	text | Description of offense corresponding with KY_CD  |
-   | 5 | LAW_CAT_CD | text | Level of Offense (felony, misdemeanor, violation) |
-   | 6 | BORO_NM | text | Name of the borough in which the incident occurred |
-   | 7 | SUSP_AGE_GROUP | text | Suspect's Age Group |
-   | 8 | SUSP_RACE | text | Suspect's Race Description |
-   | 9 | SUSP_SEX | text | Suspect's Sex Desciption |
-   | 10 | VIC_AGE_GROUP	| text | Victim's Age Group |	
-   | 11 | VIC_RACE |	text | Victim's Race Desciption |
-   | 12 | VIC_SEX |	text | Victim's Sex Description |
-
-   The original table contained 35 rows, 12 of which were chosen for this analysis. Columns like latitude, longitude, station_nm, etc. were too granular for a borough based analysis
-
-4. ### Number of Null values in each column
+   | 1 | CMPLNT_NUM | text | Unique identifier for complaint records. |
+   | 2 | CMPLNT_FR_DT | text | Exact date of occurence (if CMPLNT_TO_DT exists) |
+   | 3 | CMPLNT_FR_TM | text | exact time of occurence (if CMPLNT_TO_TM exists) |
+   | 4 | RPT_DT | text | Date the incident was reported to the police |
+   | 5 | OFNS_DESC |	text | Description of offense corresponding with KY_CD  |
+   | 6 | LAW_CAT_CD | text | Level of Offense (felony, misdemeanor, violation) |
+   | 7 | BORO_NM | text | Name of the borough in which the incident occurred |
+   | 8 | SUSP_AGE_GROUP | text | Suspect's Age Group |
+   | 9 | SUSP_RACE | text | Suspect's Race Description |
+   | 10 | SUSP_SEX | text | Suspect's Sex Desciption |
+   | 11 | VIC_AGE_GROUP	| text | Victim's Age Group |	
+   | 12 | VIC_RACE |	text | Victim's Race Desciption |
+   | 13 | VIC_SEX |	text | Victim's Sex Description |
+   | 14 | Year |	int | Derived from CMPLNT_FR_DT for filtering and time based analysis|  
+  
+   The original table contained 35 rows, 13 of which were chosen for this analysis. Columns like latitude, longitude, station_nm, etc. were too granular for a borough based analysis  
+  
+4. ### Number of Null values in each column  
   | Column | # of Nulls | Resolution |
   | ----- | ------ | ------ |
   | CMPLNT_FR_DT | 655 | dropped nulls |
@@ -65,24 +69,25 @@ Analysis of NYC Crime trends, Borough comparisons and offense types
   | OFNS_DESC | 18894 | dropped nulls |
   | LAW_CAT_CD | 0 |  n/a |
   | BORO_NM | 8719 | dropped nulls |
-  | SUSP_AGE_GROUP | 4649568 | kept nulls, filtered out during analysis  |
+  | SUSP_AGE_GROUP | 4649568 | kept nulls, filtered out during analysis |
   | SUSP_RACE | 3753075 | kept nulls, filtered out during analysis |
   | SUSP_SEX | 3886446 | kept nulls, filtered out during analysis |
   | VIC_AGE_GROUP | 1623568 | kept, filtered out during analysis |
   | VIC_RACE | 760 | dropped  |
   | VIC_SEX | 308 | dropped |  
-
+  
   *Approximately 40 - 49% of suspect information such as age, sex and race is missing which indicates the suspect wasn't found or no arrests had been made.  
   
-6. ### Important Issues and Resolutions  
+5. ### Important Issues and Resolutions  
    | # | Issue  | Resolution  |
    | --- | ---------  | ------- |
    | 1 | Incorrect values for VIC_SEX ( D, E, L) | converted to null values |
    | 2 | Null values in several columns | dropped records with null dates, offense or borough |
    | 3 | values of '(null)' | removed str, converted to null values |
-   | 4 | dates prior to the year 2006 may be incomplete or incorrect | filtered data prior 2006 for accuracy |  
+   | 4 | dates prior to the year 2006 may be incomplete or incorrect | filtered data prior 2006 for accuracy |
+   | 5 | duplicate complaint numbers | kept most recent occurrence of duplicates |  
   
-8. ### Data Type Corrections
+6. ### Data Type Corrections
    
    | Column | Original Type  | Corrected Type  |   Reason |
    | --- | ---------  | ------- | -------- |
@@ -91,24 +96,54 @@ Analysis of NYC Crime trends, Borough comparisons and offense types
    | CMPLNT_FR_TM | text | time | Required for time based analysis |
    
     
-9. ### Data Verification Checks  
+7. ### Data Verification Checks  
      
-   5.1  
-   **Question:**  
-   **Risk:**  
+   7.1  
+   **Question:** How many rows were removed during the data cleaning process? 
+   **Risk:** Removing too many rows indicate overly aggressive filter and data quality issues. Removing too few rows could suggest cleaning steps didn't execute properly.   
     
    ``` {sql}
-
+   print(f'Rows after loading: {df.shape[0]:,}')
+   print(f'Rows after dropping nulls: {df.shape[0]:,}')
+   print(f'Rows after dropping duplicates: {df.shape[0]:,}')
+   print(f'Rows after year filter: {df.shape[0]:,}')
    ```    
     
-   **Result:** 
-   
+   **Result:**  
+  Rows after loading: 9,491,946  
+  Rows after dropping nulls: 9,463,661  
+  Rows after dropping duplicates: 9,462,557  
+  Rows after year filter: 9,441,720  
+  Cleaned dataset: 9,441,720 rows, 14 columns
   
-10. ### Notable Data Observations  
+   7.2  
+   **Question:** What is the date range of the dataset?
+   **Risk:** Incorrect or imcomplete dates can indicate filtering errors or data quality issues 
+    
+   ``` {sql}
+   print(df['CMPLNT_FR_DT'].min())
+   print(df['CMPLNT_FR_DT'].max())
+   ```    
+    
+   **Result:** 2006-01-01 to 2024-12-31
+
+   7.3  
+   **Question:** Are there any duplicate complaint numbers?  
+   **Risk:** Duplicate complaint numbers can inflate crime counts across the analysis. Results could be skewed.  
+    
+   ``` {sql}
+   print(df.duplicated(['CMPLNT_NUM']).sum())
+   ```    
+    
+   **Result:** 1,105 duplicate complaint numbers dropped using drop_duplicates(), keeping the first occurrence of each complaint number. Final cleaned dataset contains 9,441,720 unique complaints.
+   
+   
+9. ### Notable Data Observations  
    | Observation | Detail | Action Taken |
    | --- | ---------  | ------- |
-   |   |   |   |  
-     
+   | null values stored as '(null)' | null values are input as a string | Set '(null)' as NaN |
+   | 40-49% suspect data is missing | Suggests low arrest rates or suspect wasn't found | records with null suspect data kept, filtered during analysis|
+
 11. ### Final Dataset Summary  
    | Metric | Value |
    | --- | ---------  |
@@ -116,7 +151,7 @@ Analysis of NYC Crime trends, Borough comparisons and offense types
    | Date Range | 2006 - 2024 |
    | Validation Checks Passed |  |
    | Import Issues resolved |  |  
-  
+
 11. ### Known Limitations  
    - Years before 2006 may be inaccurate (e.g. 1010), trimmed down to 2006 - 2024
    - Analysis does not include precise location information such as longitude, latitude, station_nm.
