@@ -143,24 +143,22 @@ An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin
    ```    
     
    **Result:** 1,105 duplicate complaint numbers dropped using drop_duplicates(), keeping the first occurrence of each complaint number. Final cleaned dataset contains 9,441,720 unique complaints.
-   
-   
-9. ### Notable Data Observations  
+8. ### Notable Data Observations  
    | Observation | Detail | Action Taken |
    | --- | ---------  | ------- |
    | null values stored as '(null)' | null values are input as a string | Set '(null)' as NaN |
    | 40-49% suspect data is missing | Suggests low arrest rates or suspect wasn't found | records with null suspect data kept, filtered during analysis |
    | Years like 1010 and 111 | Suggests data integrity issues | filtered results from 2006 - 2024 |
-   | Unexpected values in VIC_SEX | values D, E, and L | set these values to null |  
-  
-11. ### Final Dataset Summary  
+   | Unexpected values in VIC_SEX | values D, E, and L | set these values to null |
+   
+9. ### Final Dataset Summary  
    | Metric | Value |
    | --- | ---------  |
    | Total Rows | 9.44M |
    | Date Range | 2006 - 2024 |
-   | Validation Checks Passed | 3/3 |   
-  
-11. ### Known Limitations  
+   | Validation Checks Passed | 3/3 |  
+   
+10. ### Known Limitations  
    - Years before 2006 may be inaccurate (e.g. 1010), trimmed down to 2006 - 2024
    - Analysis does not include precise location information such as longitude, latitude, station_nm.
    - Approximately 40 - 49% of suspect information such as age, sex and race is missing
