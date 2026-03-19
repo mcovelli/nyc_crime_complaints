@@ -7,7 +7,8 @@ Analysis of NYC Crime trends
 
 - How to/installation guide
 - Charts to README
-    
+
+## Summary  
 An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin overall crime trends, trends by borough, time, date and victim/suspect information using Python and Pandas to clean and Matplotlib to produce visuals, Ollama to generate an AI narrative and summary and Streamlit to create a dashboard.  
   
 **Key findings:**  
