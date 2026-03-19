@@ -1,9 +1,14 @@
 # nyc_crime_complaints_historic
-Analysis of NYC Crime trends
-  
-This is an analysis of 9.4 million NYC crime complaints from 2006 through 2024. Python and Pandas were used to clean and produce visuals regarding Total crime trends over time, time of offense, date of offense, date of report, borough, victim and suspect race, gender and age group. Ollama was used to generate an AI narrative and summary while using Streamlit to create a dashboard.  
+Analysis of NYC Crime trends  
+
+[Click Here to download dataset](https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i/about_data)  
   
 ### Work in progress...  
+
+- How to/installation guide
+- Charts to README
+    
+An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin overall crime trends, trends by borough, time, date and victim/suspect information using Python and Pandas to clean and Matplotlib to produce visuals, Ollama to generate an AI narrative and summary and Streamlit to create a dashboard.  
   
 **Key findings:**  
   
@@ -36,7 +41,7 @@ This is an analysis of 9.4 million NYC crime complaints from 2006 through 2024. 
    | Original Format | CSV |
    | Exported Cleaned Format | parquet |
    | Total Rows | 9.44M |
-   | Total Columns | 13 |
+   | Total Columns | 14 |
    | Date Range | 2006 - 2024 |
    
 2. ### Data Dictionary  
