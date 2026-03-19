@@ -1,10 +1,10 @@
 # nyc_crime_complaints_historic
-Analysis of NYC Crime trends, Borough comparisons and offense types  
+Analysis of NYC Crime trends
   
-This is an analysis of 
-
+This is an analysis of 9.4 million NYC crime complaints from 2006 through 2024. Python and Pandas were used to clean and produce visuals regarding Total crime trends over time, time of offense, date of offense, date of report, borough, victim and suspect race, gender and age group. Ollama was used to generate an AI narrative and summary while using Streamlit to create a dashboard.  
+  
 ### Work in progress...  
-
+  
 **Key findings:**  
   
 • Brooklyn has the highest number of complaints, while State Island has the lowest.  
@@ -22,7 +22,7 @@ This is an analysis of
 ## Data Cleaning Log  
 **Project:** NYPD Crime Complaints  
 **Dataset:** NYPD Complaint Data Historic (NYC Open Date)  
-**Tool:** Python/Pandas/Ollama/Streamlit  
+**Tools:** Python/Pandas/Ollama/Streamlit  
 **Date:** March 2026  
 **Analyst:** Michael Covelli  
 
@@ -94,9 +94,10 @@ This is an analysis of
    | CMPLNT_FR_DT | text | Date | Required for incident date analysis |
    | RPT_DT | text | date | Required for report delay analysis |
    | CMPLNT_FR_TM | text | time | Required for time based analysis |
+   | Year | n/a | int | required for filtering and analysis |  
    
     
-7. ### Data Verification Checks  
+8. ### Data Verification Checks  
      
    7.1  
    **Question:** How many rows were removed during the data cleaning process? 
@@ -142,16 +143,17 @@ This is an analysis of
    | Observation | Detail | Action Taken |
    | --- | ---------  | ------- |
    | null values stored as '(null)' | null values are input as a string | Set '(null)' as NaN |
-   | 40-49% suspect data is missing | Suggests low arrest rates or suspect wasn't found | records with null suspect data kept, filtered during analysis|
-
+   | 40-49% suspect data is missing | Suggests low arrest rates or suspect wasn't found | records with null suspect data kept, filtered during analysis |
+   | Years like 1010 and 111 | Suggests data integrity issues | filtered results from 2006 - 2024 |
+   | Unexpected values in VIC_SEX | values D, E, and L | set these values to null |  
+  
 11. ### Final Dataset Summary  
    | Metric | Value |
    | --- | ---------  |
    | Total Rows | 9.44M |
    | Date Range | 2006 - 2024 |
-   | Validation Checks Passed |  |
-   | Import Issues resolved |  |  
-
+   | Validation Checks Passed | 3/3 |   
+  
 11. ### Known Limitations  
    - Years before 2006 may be inaccurate (e.g. 1010), trimmed down to 2006 - 2024
    - Analysis does not include precise location information such as longitude, latitude, station_nm.
