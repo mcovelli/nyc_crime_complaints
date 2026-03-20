@@ -1,4 +1,7 @@
 import ollama
+import os
+
+base_path = os.path.dirname(__file__)
 
 prompt = "You are a data analyst for a portfolio project. " \
 "Here are the key findings from analyzing 9.4 million NYC crime complaints from 2006 - 2024: " \
@@ -27,7 +30,7 @@ response = ollama.chat (
     ]
 )
 
-with open('/Users/mike/nyc-crime-ai/narrative.md', 'w') as f:
+with open(os.path.join(base_path, 'narrative.md', 'w')) as f:
     f.write(response['message']['content'])
 
 print(response['message']['content'])
