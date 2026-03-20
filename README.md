@@ -6,8 +6,12 @@ Analysis of NYC Crime trends
 ### Prerequisites  
 - Git or Github Desktop - [Git Installation Instructions](https://github.com/git-guides/install-git)
 - Python 3.10+ - [Python Installation Instructions](https://www.pythontutorial.net/getting-started/install-python/)
-- Ollama installed and running llama3.2  
-    
+- Ollama installed and running llama3.2 - [Ollama Download](https://ollama.com/download/mac)  
+  ```bash
+  ollama pull llama3.2
+  ollama serve
+  ```
+  
 1. Clone Repository  
  - In your Terminal or Command Prompt
    ```bash
