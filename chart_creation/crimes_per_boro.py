@@ -2,9 +2,11 @@
 
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 # path to data
-path = '/Users/mike/nyc-crime-ai/nyc_crime_clean.parquet'
+base_path = os.path.dirname(__file__)
+path = os.path.join(base_path, 'data', 'nyc_crime_clean.parquet')
 
 # load cleaned dataset
 df = pd.read_parquet(path)
@@ -46,5 +48,5 @@ for i, v in enumerate(crimes_per_boro.values):
 
 plt.tight_layout()
 plt.subplots_adjust(bottom=0.3)
-plt.savefig("/Users/mike/nyc-crime-ai/crimes_per_boro_bar.jpg")
+plt.savefig(os.path.join(base_path, 'charts', 'crimes_per_boro_bar.jpg')
 plt.show()
