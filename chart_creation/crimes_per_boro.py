@@ -48,5 +48,5 @@ for i, v in enumerate(crimes_per_boro.values):
 
 plt.tight_layout()
 plt.subplots_adjust(bottom=0.3)
-plt.savefig(os.path.join(base_path, 'charts', 'crimes_per_boro_bar.jpg')
+plt.savefig(os.path.join(base_path, 'charts', 'crimes_per_boro_bar.jpg'))
 plt.show()
