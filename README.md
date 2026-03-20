@@ -1,22 +1,49 @@
 # nyc_crime_complaints_historic
-Analysis of NYC Crime trends  
-
-[Click Here to download dataset](https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i/about_data)  
+Analysis of NYC Crime trends   
   
 ## Setup  
 
 ### Prerequisites  
-1. Git or Github Desktop - [Git Installation Instructions](https://github.com/git-guides/install-git)
-2. Python - [Python Installation Instructions](https://www.pythontutorial.net/getting-started/install-python/)
-3. Pandas
-4. Matplotlib
-5. Pyarrow
+- Git or Github Desktop - [Git Installation Instructions](https://github.com/git-guides/install-git)
+- Python 3.10+ - [Python Installation Instructions](https://www.pythontutorial.net/getting-started/install-python/)
+- Ollama installed and running llama3.2  
+    
+1. Clone Repository  
+ - In your Terminal or Command Prompt
+   ```bash
+   git clone https://github.com/mcovelli/nyc_crime_complaints.git
+   ```  
+
+2. Create and Activate a virtual Python environment
+   ```bash
+   cd nyc_crime_complaints
+   python -m venv venv
+
+   #Mac/Linux
+   source venv/bin/activate
+
+    #Windows
+   venv\Scripts\activate
+   ```
+   
+3. Download data set
+   - [Click Here to download dataset](https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i/about_data)
+   - Make sure the file is named NYPD_Complaint_Data_Historic.csv and saved in /nyc_crime_complaints/data/  
+
+4. Install Dependencies
+   ```bash
+   pip3 install -r requirements.txt  
+   ```  
+*Make sure your virtual environment is activiated and you are in the nyc_crime_complaints folder before running these commands*  
+5. Run cleaning script
+  ```bash
+  python3 nyc_crime_cleaning.py
+  ```  
   
-### Set up  
-1. 
-  
-### Clone Repository  
-1. 
+6. Launch the dashboard
+   ```bash
+   streamlit run app.py
+   ```
 
 ## Summary  
 An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin overall crime trends, trends by borough, time, date and victim/suspect information using Python and Pandas to clean and Matplotlib to produce visuals, Ollama to generate an AI narrative and summary and Streamlit to create a dashboard.  
@@ -35,6 +62,7 @@ An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin
 • Black suspects and victims account for an overwhelming majority of crime complaints.  
 • The majority of suspect information remains missing.  
 
+**Sample charts**
 *More charts in nyc_crime_complaints/charts/*  
   
 ![Time of Day](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/crime_time_of_day.jpg)  
