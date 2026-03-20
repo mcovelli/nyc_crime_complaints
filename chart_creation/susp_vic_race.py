@@ -1,7 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
-path = '/Users/mike/nyc-crime-ai/nyc_crime_clean.parquet'
+# path to data
+base_path = os.path.dirname(__file__)
+path = os.path.join(base_path, 'data', 'nyc_crime_clean.parquet')
 
 df = pd.read_parquet(path)
 
@@ -27,5 +30,5 @@ plt.legend(title = 'Victim\'s Race')
 plt.ylabel('Number of Crimes')
 plt.tight_layout()
 plt.subplots_adjust(bottom=0.3)
-plt.savefig('/Users/mike/nyc-crime-ai/susp_vic_race.jpg')
+plt.savefig(os.path.join(base_path, 'charts', 'susp_vic_race.jpg'))
 plt.show()
