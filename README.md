@@ -25,6 +25,8 @@ An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin
 • Black suspects and victims account for an overwhelming majority of crime complaints.  
 • The majority of suspect information remains missing.  
 
+*More charts in nyc_crime_complaints/charts/*  
+  
 ![Time of Day](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/crime_time_of_day.jpg)  
 
 ![Per Year by Borough](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/crimes_per_year_per_boro_plot.jpg)  
