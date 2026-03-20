@@ -24,6 +24,15 @@ An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin
 • Petit Larceny is the most common reported offense across all boroughs.  
 • Black suspects and victims account for an overwhelming majority of crime complaints.  
 • The majority of suspect information remains missing.  
+
+![Time of Day](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/crime_time_of_day.jpg)  
+
+![Per Year by Borough](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/crimes_per_year_per_boro_plot.jpg)  
+
+![By Borough](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/crimes_per_boro_bar.jpg)  
+
+![Murder Rates](https://github.com/mcovelli/nyc_crime_complaints/blob/e0f91506d72bb1cc592e3a8d73020d430b1e8c0f/charts/murder_rates_plot.jpg)  
+  
   
 ## Data Cleaning Log  
 **Project:** NYPD Crime Complaints  
