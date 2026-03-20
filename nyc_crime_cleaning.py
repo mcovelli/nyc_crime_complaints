@@ -1,8 +1,10 @@
 import pandas as pd
 import numpy as np
+import os
 
 # path to data
-path = '/Users/mike/nyc-crime-ai/NYPD_Complaint_Data_Historic.csv'
+base_path = os.path.dirname(__file__)
+path = os.path.join(base_path, 'data', 'NYPD_Complaint_Data_Historic.csv')
 
 # 13/35 columns loaded
 cols_to_load = ['CMPLNT_NUM', 'CMPLNT_FR_DT', 'CMPLNT_FR_TM', 'RPT_DT', 'OFNS_DESC', 'LAW_CAT_CD', 'BORO_NM', 'SUSP_AGE_GROUP', 'SUSP_RACE', 'SUSP_SEX', 'VIC_AGE_GROUP', 'VIC_RACE', 'VIC_SEX']
@@ -33,7 +35,7 @@ df['Year'] = df['CMPLNT_FR_DT'].dt.year
 df = df[df['Year'] >= 2006]
 
 # export clean dataframe to a new CSV
-df.to_parquet('/Users/mike/nyc-crime-ai/nyc_crime_clean.parquet', index=False)
+df.to_parquet(os.path.join(base_path, 'data', 'nyc_crime_clean.parquet'), index=False)
 
 print(f'Cleaned dataset: {df.shape[0]:,} rows, {df.shape[1]} columns')
 print(df.duplicated(['CMPLNT_NUM']).sum())
