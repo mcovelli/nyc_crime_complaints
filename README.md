@@ -3,10 +3,20 @@ Analysis of NYC Crime trends
 
 [Click Here to download dataset](https://data.cityofnewyork.us/Public-Safety/NYPD-Complaint-Data-Historic/qgea-i56i/about_data)  
   
-### Work in progress...  
+## Setup  
 
-- How to/installation guide
-- Charts to README
+### Prerequisites  
+1. Git or Github Desktop - [Git Installation Instructions](https://github.com/git-guides/install-git)
+2. Python - [Python Installation Instructions](https://www.pythontutorial.net/getting-started/install-python/)
+3. Pandas
+4. Matplotlib
+5. Pyarrow
+  
+### Set up  
+1. 
+  
+### Clone Repository  
+1. 
 
 ## Summary  
 An analysis of 9.4 million NYC crime complaints from 2006 through 2024 to examin overall crime trends, trends by borough, time, date and victim/suspect information using Python and Pandas to clean and Matplotlib to produce visuals, Ollama to generate an AI narrative and summary and Streamlit to create a dashboard.  
