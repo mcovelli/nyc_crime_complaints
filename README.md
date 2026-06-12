@@ -116,6 +116,123 @@ Note: The dataset is too large to upload to GitHub (~1.5 GB). You must download 
 | Date	| March 2026 |
 | Analyst	| Michael Covelli |
 ---  
+| # | Column  | Type  | Description |
+| --- | ---------  | ------- | -------- |
+| 1 | CMPLNT_FR_DT | text | Exact date of occurence (if CMPLNT_TO_DT exists) |
+| 2 | CMPLNT_FR_TM | text | exact time of occurence (if CMPLNT_TO_TM exists) |
+| 3 | RPT_DT | text | Date the incident was reported to the police |
+| 4 | OFNS_DESC |	text | Description of offense corresponding with KY_CD  |
+| 5 | LAW_CAT_CD | text | Level of Offense (felony, misdemeanor, violation) |
+| 6 | BORO_NM | text | Name of the borough in which the incident occurred |
+| 7 | SUSP_AGE_GROUP | text | Suspect's Age Group |
+| 8 | SUSP_RACE | text | Suspect's Race Description |
+| 9 | SUSP_SEX | text | Suspect's Sex Desciption |
+| 10 | VIC_AGE_GROUP	| text | Victim's Age Group |	
+| 11 | VIC_RACE |	text | Victim's Race Desciption |
+| 12 | VIC_SEX |	text | Victim's Sex Description |
+
+
+  The original table contained 35 rows, 12 of which were chosen for this analysis. Columns like latitude, longitude, station_nm, etc. were too granular for a borough based analysis  
+---
+### Number of Null values in each column  
+  | Column | # of Nulls | Resolution |
+  | ----- | ------ | ------ |
+  | CMPLNT_FR_DT | 655 | dropped nulls |
+  | OFNS_DESC | 18894 | dropped nulls |
+  | LAW_CAT_CD | 0 |  n/a |
+  | BORO_NM | 8719 | dropped nulls |
+  | SUSP_AGE_GROUP | 4649568 | kept nulls, filtered out during analysis  |
+  | SUSP_AGE_GROUP | 4649568 | kept nulls, filtered out during analysis |
+  | SUSP_RACE | 3753075 | kept nulls, filtered out during analysis |
+  | SUSP_SEX | 3886446 | kept nulls, filtered out during analysis |
+  | VIC_AGE_GROUP | 1623568 | kept, filtered out during analysis |
+  | VIC_RACE | 760 | dropped  |
+  | VIC_SEX | 308 | dropped |  
+
+  
+  *Approximately 40 - 49% of suspect information such as age, sex and race is missing which indicates the suspect wasn't found or no arrests had been made.  
+---
+### Important Issues and Resolutions  
+   | # | Issue  | Resolution  |
+   | --- | ---------  | ------- |
+   | 1 | Incorrect values for VIC_SEX ( D, E, L) | converted to null values |
+   | 2 | Null values in several columns | dropped records with null dates, offense or borough |
+   | 3 | values of '(null)' | removed str, converted to null values |
+   | 4 | dates prior to the year 2006 may be incomplete or incorrect | filtered data prior 2006 for accuracy |  
+   | 4 | dates prior to the year 2006 may be incomplete or incorrect | filtered data prior 2006 for accuracy |
+   | 5 | duplicate complaint numbers | kept most recent occurrence of duplicates |  
+---
+### Data Type Corrections
+
+   | Column | Original Type  | Corrected Type  |   Reason |
+   | --- | ---------  | ------- | -------- |
+   | CMPLNT_FR_DT | text | Date | Required for incident date analysis |
+   | RPT_DT | text | date | Required for report delay analysis |
+   | CMPLNT_FR_TM | text | time | Required for time based analysis |
+   | Year | n/a | int | required for filtering and analysis |  
+
+---
+### Data Verification Checks   
+     
+   **Question:**  
+   **Risk:**  
+   **Question:** How many rows were removed during the data cleaning process? 
+   **Risk:** Removing too many rows indicate overly aggressive filter and data quality issues. Removing too few rows could suggest cleaning steps didn't execute properly.   
+    
+   ``` {sql}
+   print(f'Rows after loading: {df.shape[0]:,}')
+   print(f'Rows after dropping nulls: {df.shape[0]:,}')
+   print(f'Rows after dropping duplicates: {df.shape[0]:,}')
+   print(f'Rows after year filter: {df.shape[0]:,}')
+   ```    
+    
+   **Result:**  
+  Rows after loading: 9,491,946  
+  Rows after dropping nulls: 9,463,661  
+  Rows after dropping duplicates: 9,462,557  
+  Rows after year filter: 9,441,720  
+  Cleaned dataset: 9,441,720 rows, 14 columns
+  
+   **Question:** What is the date range of the dataset?
+   **Risk:** Incorrect or imcomplete dates can indicate filtering errors or data quality issues 
+
+   ``` {sql}
+   print(df['CMPLNT_FR_DT'].min())
+   print(df['CMPLNT_FR_DT'].max())
+   ```    
+    
+   **Result:** 2006-01-01 to 2024-12-31
+
+   **Question:** Are there any duplicate complaint numbers?  
+   **Risk:** Duplicate complaint numbers can inflate crime counts across the analysis. Results could be skewed.  
+    
+   ``` {sql}
+   print(df.duplicated(['CMPLNT_NUM']).sum())
+   ```    
+
+   **Result:** 1,105 duplicate complaint numbers dropped using drop_duplicates(), keeping the first occurrence of each complaint number. Final cleaned dataset contains 9,441,720 unique complaints.
+
+---  
+### Notable Data Observations  
+   
+   | Observation | Detail | Action Taken |
+   | --- | ---------  | ------- |
+   | 40-49% suspect data is missing | Suggests low arrest rates or suspect wasn't found | records with null suspect data kept, filtered during analysis |
+   | Years like 1010 and 111 | Suggests data integrity issues | filtered results from 2006 - 2024 |
+   | Unexpected values in VIC_SEX | values D, E, and L | set these values to null |  
+   | null values stored as '(null)' | null values are input as a string | Set '(null)' as NaN |
+---
+### Final Dataset Summary  
+   | Metric | Value |
+   | --- | ---------  |
+   | Total Rows | 9.44M |
+   | Date Range | 2006 - 2024 |
+   | Validation Checks Passed | 3/3 |
+  
+---
+### Known Limitations  
+   - Years before 2006 may be inaccurate (e.g. 1010), trimmed down to 2006 - 2024
+   - Analysis does not include precise location information such as longitude, latitude, station_nm.
 ## 📄 License  
 This project is licensed under the 
 MIT License
